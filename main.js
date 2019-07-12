@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 
 // 加载两个模块
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow,ipcMain} = require('electron')
 const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -46,19 +46,24 @@ app.on('ready',() =>{
     webPreferences:{
       //使用nodejs的api
       nodeIntegration:true
-    }
+    },
   })
   // testMainWindow.loadURL("http://www.baidu.com")
   testMainWindow.loadFile('test1.html')
-
-  const secondMainWindow = new BrowserWindow({
-    width:400,
-    height:300,
-    webPreferences:{
-      nodeIntegration:true
-    },
-    parent:testMainWindow,
+  ipcMain.on('message',(event,args)=>{
+      console.log(args)
+      // event.sender.send('reply','reply')
+      testMainWindow.send('reply','reply test main window')
   })
+
+  // const secondMainWindow = new BrowserWindow({
+  //   width:400,
+  //   height:300,
+  //   webPreferences:{
+  //     nodeIntegration:true
+  //   },
+  //   parent:testMainWindow,
+  // })
 })
 
 // Quit when all windows are closed.
