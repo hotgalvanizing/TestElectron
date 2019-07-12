@@ -48,6 +48,17 @@ app.on('ready',() =>{
       nodeIntegration:true
     }
   })
+  // testMainWindow.loadURL("http://www.baidu.com")
+  testMainWindow.loadFile('test1.html')
+
+  const secondMainWindow = new BrowserWindow({
+    width:400,
+    height:300,
+    webPreferences:{
+      nodeIntegration:true
+    },
+    parent:testMainWindow,
+  })
 })
 
 // Quit when all windows are closed.
